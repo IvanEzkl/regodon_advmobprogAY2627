@@ -4,16 +4,18 @@
 
 A Flutter Project that focuses on advance topics. Covering the Mobile to Web Transactions.
 
-## Lab Activity Instance 
+## Lab Activity 2
 
-This project is a starting point for a Flutter application.
+# Lab Activity 2: Discussion
 
-A few resources to get you started if this is your first Flutter project:
+## Architectural Flow & API Endpoint Rendering
+This application implements a modular architecture composed of three main layers: **Models**, **Services**, and **Screens**.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+1. **Model Layer (`lib/models/product.dart`)**: Defines data structures and parsing logic (via `fromJson` factory constructors) to convert JSON payloads into strongly typed Dart objects.
+2. **Service Layer (`lib/services/product_service.dart`)**: Manages external network communication using HTTP GET requests sent to the REST API (`$host/products`). It handles status codes and parses the response body into usable model objects.
+3. **Screen / UI Layer (`lib/screens/`)**: Uses a `FutureBuilder` inside dynamic widgets (like `GridView.builder`) to asynchronously await data from `ProductService`. While waiting, it displays dynamic loading indicators, and renders product dynamic grids once state settles.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Implemented Design Pattern
+This project follows the **Provider Pattern with State Management (ChangeNotifier)** along with a clean separation of concerns:
+* **State Management**: `ThemeProvider` extends `ChangeNotifier` to hold the light/dark mode state. When toggled via `SettingsScreen`, `notifyListeners()` updates the MaterialApp reactive scope without needing complex parent-child callbacks.
+* **Feature Module Organization**: Code is logically structured into dedicated folders (`models/`, `providers/`, `screens/`, `services/`, `widgets/`) ensuring clear code readability, scalability, and ease of maintenance.
