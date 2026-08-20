@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'product_screen.dart';
 import 'cart_screen.dart';
+import 'profile_screen.dart';
+import '../services/user_service.dart';
 import '../widgets/custom_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,9 +19,37 @@ class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
+  // First name shown in AppBar when on the Profile tab — matches sample output
+  String _firstName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFirstName();
+  }
+
+  Future<void> _loadFirstName() async {
+    final data = await UserService().getUserData();
+    if (mounted) {
+      setState(() => _firstName = data['firstName'] ?? '');
+    }
+  }
+
   void _onTappedBar(int value) {
     setState(() => _selectedIndex = value);
     _pageController.jumpToPage(value);
+  }
+
+  String get _appBarTitle {
+    switch (_selectedIndex) {
+      case 1:
+        return 'Cart';
+      case 2:
+        // Sample output shows the user's first name here (e.g. "Emily")
+        return _firstName.isNotEmpty ? _firstName : 'Profile';
+      default:
+        return '';
+    }
   }
 
   @override
@@ -31,6 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
           automaticallyImplyLeading: false,
           elevation: 2,
           title: (_selectedIndex == 0)
+              // Shop tab: show logo
               ? SizedBox(
                   height: 28.h,
                   child: Image.asset(
@@ -44,12 +75,9 @@ class HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 )
+              // Cart / Profile tabs: show text
               : CustomText(
-                  text: (_selectedIndex == 1)
-                      ? 'Cart'
-                      : (_selectedIndex == 2)
-                          ? 'Profile'
-                          : 'Home',
+                  text: _appBarTitle,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -69,11 +97,11 @@ class HomeScreenState extends State<HomeScreen> {
           children: const <Widget>[
             ProductScreen(),
             CartScreen(),
-            Center(child: Text('Profile Screen')),
+            // Enhancement 2: Profile page replaces the placeholder
+            ProfileScreen(),
           ],
         ),
-        // Enhancement 2: Chat bottom nav becomes a FloatingActionButton.
-        // Hidden when the user is on the CartScreen (index 1).
+        // Enhancement 2: Chat FAB — hidden on Cart tab
         floatingActionButton: _selectedIndex == 1
             ? null
             : FloatingActionButton(
@@ -82,7 +110,7 @@ class HomeScreenState extends State<HomeScreen> {
                     const SnackBar(content: Text('Chat coming soon!')),
                   );
                 },
-                backgroundColor: const Color(0xFF655A7C),
+                backgroundColor: const Color(0xFFC8962A), // gold — matches sample
                 child: const Icon(Icons.chat, color: Colors.white),
               ),
         bottomNavigationBar: BottomNavigationBar(

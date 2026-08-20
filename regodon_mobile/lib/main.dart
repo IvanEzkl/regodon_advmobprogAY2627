@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 // screens
 import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/splash_screen.dart';
+import 'screens/signin_screen.dart';
 
 // providers
 import 'providers/theme_provider.dart';
@@ -80,10 +82,54 @@ class RoblesAdvMobProg extends StatelessWidget {
                 contentTextStyle: TextStyle(color: Color(0xFFFDF1E2)),
               ),
             ),
-            darkTheme: ThemeData.dark(),
+            // Enhancement 3: Branded dark theme — mirrors light palette but inverted
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: const ColorScheme.dark(
+                primary: Color(0xFFAB92BF),       // Amethyst (primary actions)
+                onPrimary: Color(0xFF1A1625),      // Deep purple (text on primary)
+                secondary: Color(0xFF655A7C),      // Dolphin
+                onSecondary: Color(0xFFFDF1E2),    // Linen
+                surface: Color(0xFF2D2640),        // Dark card surface
+                onSurface: Color(0xFFFDF1E2),      // Linen (text on surface)
+                onSurfaceVariant: Color(0xFFAB92BF), // Amethyst (secondary text)
+                outline: Color(0xFF655A7C),
+                outlineVariant: Color(0xFF3D3550),
+              ),
+              scaffoldBackgroundColor: const Color(0xFF1A1625),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Color(0xFF2D2640),
+                foregroundColor: Color(0xFFFDF1E2),
+                elevation: 2,
+              ),
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                backgroundColor: Color(0xFF2D2640),
+                selectedItemColor: Color(0xFFAB92BF),
+                unselectedItemColor: Color(0xFF655A7C),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFAB92BF),
+                  foregroundColor: const Color(0xFF1A1625),
+                ),
+              ),
+              floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                backgroundColor: Color(0xFFAB92BF),
+                foregroundColor: Color(0xFF1A1625),
+              ),
+              cardTheme: const CardThemeData(
+                color: Color(0xFF2D2640),
+              ),
+              snackBarTheme: const SnackBarThemeData(
+                backgroundColor: Color(0xFF2D2640),
+                contentTextStyle: TextStyle(color: Color(0xFFFDF1E2)),
+              ),
+            ),
             themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
-            initialRoute: '/home',
+            initialRoute: '/splash',
             routes: {
+              '/splash': (context) => const SplashScreen(),
+              '/signin': (context) => const SigninScreen(),
               '/home': (context) => const HomeScreen(),
               // Enhancement 3: Route for Settings Screen
               '/settings': (context) => const SettingsScreen(),
