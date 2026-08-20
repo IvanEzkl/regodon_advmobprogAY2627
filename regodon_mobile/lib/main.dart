@@ -38,7 +38,48 @@ class RoblesAdvMobProg extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'E-Commerce App',
             // Enhancement 3: Dynamically switch light/dark theme using ThemeProvider
-            theme: ThemeData.light(),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFF655A7C),       // Dolphin
+                onPrimary: Color(0xFFFDF1E2),      // Linen (text on primary)
+                secondary: Color(0xFFAB92BF),      // Amethyst
+                onSecondary: Color(0xFFFDF1E2),    // Linen (text on secondary)
+                surface: Color(0xFFFDF1E2),        // Linen (cards, surfaces)
+                onSurface: Color(0xFF655A7C),      // Dolphin (text on surface)
+                onSurfaceVariant: Color(0xFFAB92BF), // Amethyst (secondary text)
+                outline: Color(0xFFAB92BF),        // Amethyst (borders)
+                outlineVariant: Color(0xFFE8DCF0), // light amethyst (dividers)
+              ),
+              scaffoldBackgroundColor: const Color(0xFFFDF1E2),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Color(0xFF655A7C),
+                foregroundColor: Color(0xFFFDF1E2),
+                elevation: 2,
+              ),
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                backgroundColor: Color(0xFF655A7C),
+                selectedItemColor: Color(0xFFFDF1E2),
+                unselectedItemColor: Color(0xFFAB92BF),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF655A7C),
+                  foregroundColor: const Color(0xFFFDF1E2),
+                ),
+              ),
+              floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                backgroundColor: Color(0xFF655A7C),
+                foregroundColor: Color(0xFFFDF1E2),
+              ),
+              cardTheme: const CardThemeData(
+                color: Color(0xFFFDF1E2),
+              ),
+              snackBarTheme: const SnackBarThemeData(
+                backgroundColor: Color(0xFF655A7C),
+                contentTextStyle: TextStyle(color: Color(0xFFFDF1E2)),
+              ),
+            ),
             darkTheme: ThemeData.dark(),
             themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
             initialRoute: '/home',
