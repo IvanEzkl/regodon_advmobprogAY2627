@@ -4,44 +4,18 @@
 
 A Flutter Project that focuses on advance topics. Covering the Mobile to Web Transactions.
 
-# Lab Activity 4: UI/UX Enhancements & Profile Integration
+## Lab Activity 1: Discussion
 
-This update introduces a custom splash screen, a branded sign-in flow, a dynamic profile view, and a global theme switcher built on a strict three-layer architecture.
+Lab Activity 1 -setState manages local, single-widget state by rebuilding the entire widget on each update, making it best for simple UI interactions like toggles. Provider handles app-wide state by separating business logic into dedicated models, boosting performance by rebuilding only the specific widgets listening to the changed data.
 
----
+# Lab Activity 2: Discussion
 
-## 🏗️ Architecture Overview
+Lab Activity 2 - This app uses a layered Model-Service-Screen architecture: Models parse JSON into typed objects, Services handle HTTP calls to the API, and Screens use FutureBuilder to load and display data asynchronously. State is managed via the Provider pattern, where ThemeProvider extends ChangeNotifier to toggle light/dark mode and update the UI reactively through notifyListeners().
 
-| Layer | Path | Responsibility |
-| :--- | :--- | :--- |
-| **Model** | `lib/models/user.dart` | Defines the `User` schema and handles JSON deserialization for credentials, profile data, and session tokens. |
-| **Service** | `lib/services/user_service.dart` | Manages `POST /auth/login` requests, token validation via `GET /auth/me`, and persistent local storage through `SharedPreferences`. |
-| **UI** | `lib/screens/profile_screen.dart` | Hydrates user details directly from local cache during `initState()` to eliminate unnecessary network overhead. |
+# Lab Activity 3: Discussion
 
----
+Lab Activity 3 - This activity extends the app with a Cart feature using the DummyJSON API, following the same three-layer architecture. The Model layer (cart.dart) defines Cart and CartProduct via fromJson; the Service layer (cart_service.dart) handles getCartByUserId() (GET /carts/user/{id}) and addToCart() (POST /carts/add); and the Screen layer (cart_screen.dart) uses FutureBuilder to render cart items, reusing ProductDetailScreen for item details. It follows the same Provider pattern with separation of concerns, and getCartByUserId(1) is called on initState() to simulate a logged-in user, rendering the first cart returned.
 
-## ⚙️ Implemented Design Patterns
+## Lab Activity 4: Discussion
 
-### 1. Theme Management (`ThemeProvider`)
-* Manages global app brightness using a central reactive state.
-* `MaterialApp` listens via `context.watch<ThemeProvider>()` to hot-swap between branded light and dark theme data across all routes.
-
-### 2. State & Auth Isolation (`UserService`)
-* Acts as the single source of truth for session lifecycles.
-* UI widgets remain purely presentational, consuming auth state without managing local credentials directly.
-
----
-
-## 🛒 User-Scoped Cart Flow
-
-[ User Logs In ] ──> [ ID Saved to SharedPreferences ]
-│
-▼
-[ CartScreen: initState() ] ──> [ Read Stored ID ]
-│
-▼
-[ CartService ] ─────────────> [ GET /carts/user/{id} ] ──> [ FutureBuilder UI ]
-
-1. **Persistence:** The authenticated user's `id` is saved locally upon login.
-2. **Data Fetching:** `CartScreen` reads the cached ID on initialization.
-3. **Rendering:** `CartService().getCartByUserId(id)` fetches the corresponding dataset, rendering cart items dynamically through a `FutureBuilder`.
+Lab Activity 4 - This update introduces a custom splash screen, branded sign-in flow, dynamic profile view, and global theme switcher, following the same three-layer architecture. The Model layer (user.dart) defines the User schema for credentials and session tokens; the Service layer (user_service.dart) handles POST /auth/login, token validation via GET /auth/me, and persistence through SharedPreferences; and the UI layer (profile_screen.dart) hydrates user data from local cache on initState() to avoid extra network calls. ThemeProvider manages global light/dark theming reactively via context.watch<ThemeProvider>(), while UserService serves as the single source of truth for auth state. The cart flow is user-scoped: after login, the user's id is saved to SharedPreferences, read by CartScreen on initState(), and used by CartService().getCartByUserId(id) to fetch and render the cart via FutureBuilder.
