@@ -4,16 +4,14 @@
 
 A Flutter Project that focuses on advance topics. Covering the Mobile to Web Transactions.
 
-## Lab Activity 3
+## Lab Activity 1: Discussion
+
+Lab Activity 1 -setState manages local, single-widget state by rebuilding the entire widget on each update, making it best for simple UI interactions like toggles. Provider handles app-wide state by separating business logic into dedicated models, boosting performance by rebuilding only the specific widgets listening to the changed data.
+
+# Lab Activity 2: Discussion
+
+Lab Activity 2 - This app uses a layered Model-Service-Screen architecture: Models parse JSON into typed objects, Services handle HTTP calls to the API, and Screens use FutureBuilder to load and display data asynchronously. State is managed via the Provider pattern, where ThemeProvider extends ChangeNotifier to toggle light/dark mode and update the UI reactively through notifyListeners().
+
 # Lab Activity 3: Discussion
-## API PART II
-This activity extends the app with a Cart feature using the DummyJSON API, following the same three-layer architecture: **Models**, **Services**, and **Screens**.
-1. **Model Layer ( `lib/models/cart.dart` ):** Defines `Cart` and `CartProduct` using `fromJson` to convert JSON payloads into typed Dart objects.
-2. **Service Layer ( `lib/services/cart_service.dart` ):** Handles API calls — `getCartByUserId()` fetches a user's cart via `GET /carts/user/{id}`, and `addToCart()` posts to `POST /carts/add`.
-3. **Screen / UI Layer ( `lib/screens/cart_screen.dart` ):** Uses a `FutureBuilder` to render cart items. Tapping an item fetches the full product via `getProductById()` and navigates to the same `ProductDetailScreen` used in the product flow.
-## Implemented Design Pattern
-The activity follows the same **Provider Pattern with separation of concerns**, extended with a cart module:
-- **Cart Module:** `cart.dart`, `cart_service.dart`, and `cart_screen.dart` mirror the existing product module structure.
-- **Shared Navigation:** `ProductDetailScreen` is reused for both product browsing and cart item details, eliminating code duplication.
-## Using getById at the Cart Endpoint
-`GET /carts/user/{id}` returns carts belonging to a specific user. `getCartByUserId(1)` is called on `initState()` to simulate a logged-in user, and the first cart in the response is rendered in `CartScreen`.
+
+Lab Activity 3 - This activity extends the app with a Cart feature using the DummyJSON API, following the same three-layer architecture. The Model layer (cart.dart) defines Cart and CartProduct via fromJson; the Service layer (cart_service.dart) handles getCartByUserId() (GET /carts/user/{id}) and addToCart() (POST /carts/add); and the Screen layer (cart_screen.dart) uses FutureBuilder to render cart items, reusing ProductDetailScreen for item details. It follows the same Provider pattern with separation of concerns, and getCartByUserId(1) is called on initState() to simulate a logged-in user, rendering the first cart returned.
