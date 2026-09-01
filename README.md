@@ -8,12 +8,5 @@ A Flutter Project that focuses on advance topics. Covering the Mobile to Web Tra
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Lab Activity 1 -
+setState manages local, single-widget state by rebuilding the entire widget on each update, making it best for simple UI interactions like toggles. Provider handles app-wide state by separating business logic into dedicated models, boosting performance by rebuilding only the specific widgets listening to the changed data.
